@@ -161,4 +161,36 @@ var EngineJS = function(name){
         that.context.clearRect(0, 0, that.getWH().w, that.getWH().h);
     }
 
+    this.drawText = function(props){
+        if(props){
+            if(typeof props.text == 'undefined'){
+                log('Text not defined');
+                return;
+            }
+            var x = typeof props.x != 'undefined' ? props.x : 0;
+            var y = typeof props.y != 'undefined' ? props.y : 0;
+            var fontSize = typeof props.fontSize != 'undefined' ? props.fontSize : 12;
+            var fontFamily = typeof props.fontFamily != 'undefined' ? props.fontFamily : 'Arial';
+            var fontFamily = typeof props.fontFamily != 'undefined' ? props.fontFamily : 'Arial';
+            var color = typeof props.shadowBlur != 'undefined' ? props.color : 'white';
+            var shadowColor = typeof props.shadowColor != 'undefined' ? props.shadowColor : color;
+            var shadowBlur = typeof props.shadowBlur != 'undefined' ? props.shadowBlur : 0;
+            var type = typeof props.type != 'undefined' ? props.type : 'fill';
+            var strokeColor = typeof props.strokeColor != 'undefined' ? props.strokeColor : 'black';
+            var strokeWidth = typeof props.strokeWidth != 'undefined' ? props.strokeWidth : 1;
+            var textAlign = typeof props.textAlign != 'undefined' ? props.textAlign : 'left';
+            that.context.font =  fontSize + 'px ' + fontFamily;
+            that.context.shadowColor = shadowColor;
+            that.context.shadowBlur = shadowBlur;
+            that.context.fillStyle = color;
+            that.context.strokeStyle = strokeColor;
+            that.context.lineWidth = strokeWidth;
+            that.context.textAlign = textAlign;
+            if(type == 'fill')
+                that.context.fillText(props.text, x, y + 30);
+            else if(type == 'stroke')
+                that.context.strokeText(props.text, x, y + 30);
+        }
+    }
+
 }
