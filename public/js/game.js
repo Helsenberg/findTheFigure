@@ -95,7 +95,7 @@ var Game = function(){
 
     refreshData();
 
-    document.onkeyup = function (event) {
+    document.onkeydown = function (event) {
         if(event.keyCode == 38){
             if(centerFigureRand.pos == 0 && !answer){
                 refresh = true;
