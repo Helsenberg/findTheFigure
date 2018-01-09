@@ -1,0 +1,33 @@
+{
+  "name": "findthefigure",
+  "version": "1.0.0",
+  "description": "description",
+  "main": "server.js",
+  "dependencies": {
+    "async": "^2.6.0",
+    "body-parser": "^1.18.2",
+    "connect-mongo": "^2.0.0",
+    "cookie-parser": "^1.4.3",
+    "crypto": "^1.0.1",
+    "ejs": "^2.5.7",
+    "ejs-locals": "^1.0.2",
+    "errorhandler": "^1.5.0",
+    "express": "^3.3.8",
+    "express-session": "^1.15.6",
+    "method-override": "^2.3.10",
+    "mongodb": "^3.0.0-rc0",
+    "mongoose": "^4.13.7",
+    "nconf": "^0.9.1",
+    "serve-favicon": "^2.4.5",
+    "socket.io": "^2.0.3",
+    "util": "^0.10.3",
+    "uuid": "^3.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Stas R",
+  "license": "ISC"
+}
