@@ -22,7 +22,7 @@ app.use(bodyParser());
 
 var MongoStore = require('connect-mongo')(expressSession);
 
-app.set('trust proxy', 1) // trust first proxy
+app.set('trust proxy', 1);
 app.use(cookieParser());
 app.use(expressSession({
     secret: config.get('session:secret'),
@@ -33,7 +33,7 @@ app.use(expressSession({
 
 require('routes')(app);
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
 app.use(function(err, req, res, next){
     if(app.get('env') == 'development'){
@@ -47,6 +47,19 @@ app.use(function(err, req, res, next){
 
 http.createServer(app).listen(config.get('port'), function(){
     console.log('listening on *:' + config.get('port'));
+});
+
+app.all("*", function (req, res, next) {
+    var request = req.params[0];
+    if ((request === "/") || (request === "")) {
+        request = "/index.html";
+    }
+    if ((request.substr(0, 1) === "/") && (request.substr(request.length - 4) === "html")) {
+        request = request.substr(1);
+        res.render(request);
+    } else {
+        next();
+    }
 });
 
 

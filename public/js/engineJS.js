@@ -29,7 +29,11 @@ var EngineJS = function(name){
         return {w: that.canvas.width, h: that.canvas.height};
     };
 
-    this.initFullPage = function(){
+    this.initFullPage = function(offsets){
+        if(typeof offsets == 'object'){
+            wW -= offsets.w;
+            wH -= offsets.h;
+        }
         that.setWH(wW, wH);
         window.onresize = function() {
             wW = window.innerWidth,
@@ -170,7 +174,6 @@ var EngineJS = function(name){
             var x = typeof props.x != 'undefined' ? props.x : 0;
             var y = typeof props.y != 'undefined' ? props.y : 0;
             var fontSize = typeof props.fontSize != 'undefined' ? props.fontSize : 12;
-            var fontFamily = typeof props.fontFamily != 'undefined' ? props.fontFamily : 'Arial';
             var fontFamily = typeof props.fontFamily != 'undefined' ? props.fontFamily : 'Arial';
             var color = typeof props.shadowBlur != 'undefined' ? props.color : 'white';
             var shadowColor = typeof props.shadowColor != 'undefined' ? props.shadowColor : color;

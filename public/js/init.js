@@ -36,4 +36,4 @@ var ejs = new EngineJS('game'),
     log = ejs.log,
     OOP = ejs.OOP;
 
-ejs.initFullPage();
+ejs.initFullPage({h: 120, w: 0});
