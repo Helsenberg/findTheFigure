@@ -1,21 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%=blocks.title%></title>
-
-  <link rel="stylesheet" href="/vendor/bower_components/bootstrap/dist/css/bootstrap.css"/>
-  <link rel="stylesheet" href="/css/app.css"/>
-
-  <script src="/vendor/bower_components/jquery/dist/jquery.min.js"></script>
-  <script src="/vendor/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <title><%=blocks.title%></title>
+    <link rel="stylesheet" href="/css/app.css"/>
 </head>
 <body>
-<header class="container">
-  <%-partial('../partials/topNavigation')%>
-</header>
-  <%-body -%>
-<footer>
-  <%-partial('../partials/footer')%>
-</footer>
+    <header class="container">
+        <%-partial('../partials/topNav')%>
+    </header>
+        <%-body -%>
+    <footer>
+        <%-partial('../partials/footer')%>
+    </footer>
 </body>
 </html>

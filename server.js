@@ -1,111 +1,44 @@
-var express = require('express');
-var http = require('http');
-//var io = require('socket.io')(http);
-var MongoClient = require('mongodb').MongoClient;
-var config = require('config');
-var path = require('path');
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-var expressSession = require('express-session');
-var errorhandler = require('errorhandler');
-var mongoose = require('lib/mongoose');
+const express = require('express');
+//const io = require('socket.io')(http);
+const config = require('./config');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const expressSession = require('express-session');
+const port = config.get('port');
+const server = express();
+const db = require('./db')();
+require('./api')(server);
+require('./routes')(server);
 
-var app = express();
-
-app.engine('ejs', require('ejs-locals'));
-app.set('views', __dirname + '/template');
-app.set('view engine', 'ejs');
-app.use(errorhandler());
-
-app.use(app.router);
-app.use(bodyParser());
-
-var MongoStore = require('connect-mongo')(expressSession);
-
-app.set('trust proxy', 1);
-app.use(cookieParser());
-app.use(expressSession({
+server.engine('ejs', require('ejs-locals'));
+server.set('views', __dirname + '/template');
+server.set('view engine', 'ejs');
+server.use(server.router);
+server.use(bodyParser());
+server.use(cookieParser());
+server.set('trust proxy', 1);
+server.use(expressSession({
     secret: config.get('session:secret'),
     key: config.get('session:key'),
-    cookie: config.get('session:cookie'),
-    store: new MongoStore({ mongooseConnection: mongoose.connection })
+    cookie: config.get('session:cookie')
 }));
 
-require('routes')(app);
+server.use(express.static('public'));
 
-app.use(express.static('public'));
-
-app.use(function(err, req, res, next){
-    if(app.get('env') == 'development'){
-        var errorHandler = errorhandler();
-        errorHandler(err, req, res, next);
-    }
-    else{
-        res.send(500);
-    }
-})
-
-http.createServer(app).listen(config.get('port'), function(){
-    console.log('listening on *:' + config.get('port'));
+server.listen(port, err => {
+    if (err) throw err
+    console.log(`> Ready on http://localhost:${port}`);
 });
 
-app.all("*", function (req, res, next) {
-    var request = req.params[0];
-    if ((request === "/") || (request === "")) {
-        request = "/index.html";
-    }
-    if ((request.substr(0, 1) === "/") && (request.substr(request.length - 4) === "html")) {
-        request = request.substr(1);
-        res.render(request);
-    } else {
-        next();
-    }
-});
+db.end();
 
-
-/*app.get('/', function(req, res){
-    res.sendFile(__dirname + '/index.html');
-});
-
-app.get('/index.html', function(req, res){
-    res.sendFile(__dirname + '/index.html');
-});
-
-app.get('/game.html', function(req, res){
-    res.sendFile(__dirname + '/game.html');
-});
-
-app.get('/js/point.min.js', function(req, res){
-    res.sendFile(__dirname + '/js/point.min.js');
-});
-
-app.get('/js/init.js', function(req, res){
-    res.sendFile(__dirname + '/js/init.js');
-});
-
-app.get('/js/menu.js', function(req, res){
-    res.sendFile(__dirname + '/js/menu.js');
-});
-
-app.get('/js/game.js', function(req, res){
-    res.sendFile(__dirname + '/js/game.js');
-});
-
-
-app.get('/images/back.jpg', function(req, res){
-    res.sendFile(__dirname + '/images/back.jpg');
-});*/
-
-
-//var db;
-
-/*MongoClient.connect('mongodb://localhost:27017/app', function(err, database){
+/*MongoClient.connect('mongodb://localhost:27017/server', function(err, database){
     if(err){
         return console.log(err);
     }
     db = database;
 
-    var score = 0;
+    const score = 0;
 
     io.on('connection', function (socket) {
 

@@ -3,7 +3,7 @@ var Game = function(){
 
     var width = ejs.getWH().w,
         height = ejs.getWH().h,
-        sizeFacet = parseInt(width / 8),
+        sizeFacet = parseInt(width / 10),
         countFigures,
         arrFiguresRand,
         arrFiguresRandPos,
